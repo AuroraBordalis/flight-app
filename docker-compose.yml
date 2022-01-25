@@ -1,0 +1,48 @@
+version: '3.6'
+
+services:
+
+    backend:
+        container_name: backend
+        ports:
+            - 8080:8080
+        depends_on:
+            - db
+        build:
+            context: ./flightManagmentSystem
+            dockerfile: Dockerfile
+
+            
+    db:
+        image: mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: mydb
+            MYSQL_USER: user
+            MYSQL_PASSWORD: user
+
+        volumes:
+            - ./init:/docker-entrypoint-initdb.d
+            - my-datavolume:/var/lib/mysql
+
+    frontend:
+        container_name: frontend
+        build:
+            context: ./flight-system-app
+            dockerfile: Dockerfile
+        volumes:
+            - './flight-system-app:/app'
+            - '/app/node_modules'
+        ports:
+            - 3000:3000
+        environment:
+            - CHOKIDAR_USEPOLLING=true
+    
+        
+    
+volumes:
+  my-datavolume:
