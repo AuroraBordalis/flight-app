@@ -39,7 +39,8 @@ services:
         ports:
             - 8080:8080
         depends_on:
-            - db
+            - "db"
+        restart: on-failure:5
         build:
             context: ./flightManagmentSystem
             dockerfile: Dockerfile
