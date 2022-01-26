@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import CustomerPage from './pages/CustomerPage';
 import SystemPage from './pages/SystemPage';
-import AirportsPage from './pages/AiportsPage';
+import AirportsPage from './pages/AirportsPage';
 import AddAirports from './pages/AddAirports';
 import FlightsPage from './pages/FlightsPage';
 import AddFlights from './pages/AddFlights';
