@@ -17,7 +17,7 @@ import com.shawn.projects.flightManagementSystem.model.Flight;
 import com.shawn.projects.flightManagementSystem.model.Reservation;
 import com.shawn.projects.flightManagementSystem.repositories.ReservationRepository;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value="/reservations")
 public class ReservationResource {

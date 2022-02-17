@@ -13,6 +13,8 @@ import BookFlights from './pages/BookFlights';
 import AddReservation from './pages/AddReservation';
 import ViewReservations from './pages/ViewReservations';
 import FlightReservations from './pages/FlightReservations';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
 function App() {
   return (
     <Router>
@@ -31,6 +33,8 @@ function App() {
             <Route exact path="/Reservations" element={<ViewReservations />} />
             <Route path="/FlightReservation/:id" element={<FlightReservations />} />
             <Route exact path="/BookFlightsPage" element={<BookFlights />} />
+            <Route exact path="/SignUp" element={<SignUp/>} />
+            <Route exact path="/Login" element={<Login/>} />
           </Routes>
         </div>
       </div>

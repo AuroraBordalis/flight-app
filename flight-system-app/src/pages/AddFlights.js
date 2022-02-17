@@ -23,7 +23,12 @@ function AddFlights(props) {
     const arrivalDateTime = React.createRef();
 
     useEffect(() => {
-        fetch("http://localhost:8080/flights/single?id=" + id)
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+        fetch("http://localhost:8080/flights/single?id=" + id,requestOptions)
             .then(res => res.json())
             .then(result => {
                 setFlight(result);
@@ -48,7 +53,8 @@ function AddFlights(props) {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem("token")  },
             body: JSON.stringify(flight)
         };
         fetch("http://localhost:8080/flights/load/single", requestOptions)

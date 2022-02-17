@@ -17,7 +17,7 @@ import com.shawn.projects.flightManagementSystem.model.Airport;
 import com.shawn.projects.flightManagementSystem.repositories.AirportRepository;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping(value="/airports")
 public class AirportResource {

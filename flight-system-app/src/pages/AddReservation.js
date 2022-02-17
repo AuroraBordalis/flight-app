@@ -21,7 +21,12 @@ function AddReservation(props) {
 
     useEffect(() => {
         if (onLoad) {
-            fetch("http://localhost:8080/flights/single?id=" + id)
+            let token = window.sessionStorage.getItem("token");
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Authorization': token }
+            };
+            fetch("http://localhost:8080/flights/single?id=" + id, requestOptions)
                 .then(res => res.json())
                 .then(result => {
                     setFlight(result);
@@ -61,7 +66,8 @@ function AddReservation(props) {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem("token") },
             body: JSON.stringify(reservation)
         };
         if (window.confirm("Are you sure you want to reserve this flight?")) {

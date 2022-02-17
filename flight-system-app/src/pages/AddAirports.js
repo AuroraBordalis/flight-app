@@ -9,7 +9,12 @@ function AddAirports(props) {
     let navigate = useNavigate();
 
     useEffect(() => {
-        fetch("http://localhost:8080/airports/single?id=" + id)
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+        fetch("http://localhost:8080/airports/single?id=" + id,requestOptions)
             .then(res => res.json())
             .then(result => {
                 setAirport(result);
@@ -26,7 +31,8 @@ function AddAirports(props) {
         event.preventDefault();
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+            'Authorization': window.sessionStorage.getItem("token") },
             body: JSON.stringify(airport)
         };
         fetch("http://localhost:8080/airports/load/single", requestOptions)

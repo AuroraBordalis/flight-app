@@ -8,16 +8,28 @@ class ViewReservations extends Component {
     }
 
     componentDidMount() {
-        let response = fetch("http://localhost:8080/reservations/all");
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+
+        let response = fetch("http://localhost:8080/reservations/all", requestOptions);
         response.then(res => res.json()).then(result => {
             this.setState({ reservations: result }, this.initializer())
         });
-        
+
     }
 
     deletereservation(reservationCode) {
         if (window.confirm("Are you sure you want to delete the reservation:" + reservationCode)) {
-            fetch("http://localhost:8080/reservations/single?id=" + reservationCode, { method: 'DELETE' })
+            let token = window.sessionStorage.getItem("token");
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Authorization': token }
+            };
+
+            fetch("http://localhost:8080/reservations/single?id=" + reservationCode, requestOptions)
                 .then(res => res.json()).then(result => {
                     this.setState({ reservations: result }, this.initializer());
                 });
@@ -26,13 +38,19 @@ class ViewReservations extends Component {
 
     }
 
-    initializer(){
-        let anotherResponse = fetch("http://localhost:8080/flights/all");
+    initializer() {
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+
+        let anotherResponse = fetch("http://localhost:8080/flights/all",requestOptions);
         anotherResponse.then(res => res.json()).then(result => {
             let tempRes = [];
             this.state.reservations.forEach(reserve => {
-                for(let i = 0 ; i < result.length; i++){
-                    if (result[i].flightNumber == reserve.flightNumber){
+                for (let i = 0; i < result.length; i++) {
+                    if (result[i].flightNumber == reserve.flightNumber) {
                         reserve['origin'] = result[i].originAirportCode;
                         reserve['destination'] = result[i].destinationAirportCode;
                         tempRes.push(reserve);
@@ -40,7 +58,7 @@ class ViewReservations extends Component {
                     }
                 }
             })
-            this.setState({reservations:tempRes});
+            this.setState({ reservations: tempRes });
         });
     }
 

@@ -18,7 +18,13 @@ function FlightReservations(props) {
 
     useEffect(() => {
 
-        fetch("http://localhost:8080/reservations/flight?id=" + id)
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+
+        fetch("http://localhost:8080/reservations/flight?id=" + id,requestOptions)
             .then(res => res.json())
             .then(result => {
                 setReservations(result);

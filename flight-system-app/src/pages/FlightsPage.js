@@ -12,15 +12,25 @@ class FlightsPage extends Component {
     }
 
     componentDidMount() {
-        let response = fetch("http://localhost:8080/flights/all");
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+        let response = fetch("http://localhost:8080/flights/all",requestOptions);
         response.then(res => res.json()).then(result => {
             this.setState({ flights: result })
         });
     }
 
     deleteflight(flightCode) {
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Authorization': token }
+        };
         if (window.confirm("Are you sure you want to delete " + flightCode)) {
-            fetch("http://localhost:8080/flights/single?id=" + flightCode, { method: 'DELETE' })
+            fetch("http://localhost:8080/flights/single?id=" + flightCode, requestOptions)
                 .then(res => res.json()).then(result => {
                     this.setState({ flights: result })
                 });
@@ -39,8 +49,13 @@ class FlightsPage extends Component {
     }
 
     handleSubmit(){
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
         let airportCode = this.state.searchAirport.toString().toUpperCase();
-        let response = fetch("http://localhost:8080/flights/load/airport?airportCode="+airportCode);
+        let response = fetch("http://localhost:8080/flights/load/airport?airportCode="+airportCode,requestOptions);
         response.then(res => res.json()).then(result => {
             this.setState({ flights: result })
         });

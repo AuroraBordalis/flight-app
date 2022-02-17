@@ -11,15 +11,25 @@ class AirportsPage extends Component {
     }
 
     componentDidMount() {
-        let response = fetch("http://localhost:8080/airports/all");
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Authorization': token }
+        };
+        let response = fetch("http://localhost:8080/airports/all", requestOptions);
         response.then(res => res.json()).then(result => {
             this.setState({ airports: result })
         });
     }
 
     deleteAirport(airportCode) {
+        let token = window.sessionStorage.getItem("token");
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Authorization': token }
+        };
         if (window.confirm("Are you sure you want to delete " + airportCode)) {
-            fetch("http://localhost:8080/airports/single?id=" + airportCode, { method: 'DELETE' })
+            fetch("http://localhost:8080/airports/single?id=" + airportCode, requestOptions)
             .then(res => res.json()).then(result => {
                 this.setState({airports: result})
             });
