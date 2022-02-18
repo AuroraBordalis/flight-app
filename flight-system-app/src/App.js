@@ -15,11 +15,17 @@ import ViewReservations from './pages/ViewReservations';
 import FlightReservations from './pages/FlightReservations';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import UserContextProvider from './contexts/UserContext';
 function App() {
   return (
+    <UserContextProvider>
     <Router>
+      
       <div>
-        <Navbar />
+       
+          <Navbar/>
+        
+
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -33,12 +39,14 @@ function App() {
             <Route exact path="/Reservations" element={<ViewReservations />} />
             <Route path="/FlightReservation/:id" element={<FlightReservations />} />
             <Route exact path="/BookFlightsPage" element={<BookFlights />} />
-            <Route exact path="/SignUp" element={<SignUp/>} />
-            <Route exact path="/Login" element={<Login/>} />
+            <Route exact path="/SignUp" element={<SignUp />} />
+            <Route exact path="/Login" element={<Login />} />
           </Routes>
         </div>
       </div>
+      
     </Router>
+    </UserContextProvider>
 
   );
 }

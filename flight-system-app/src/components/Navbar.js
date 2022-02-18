@@ -1,9 +1,14 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 
 
 
 class Navbar extends Component {
+    static contextType = UserContext;
     render() {
+        console.log(this.context);
+        const {isLoggedIn, isAdmin}  = this.context;
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a className="navbar-brand" href="#">Flight-System</a>
@@ -15,12 +20,15 @@ class Navbar extends Component {
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
                         </li>
-                        <li className="nav-item active">
+                        {isLoggedIn ? <li className="nav-item active">
                             <a className="nav-link" href="/Customer">Customer Functions</a>
-                        </li>
-                        <li className="nav-item active">
+                        </li> : <a></a> }
+                        {isAdmin ? <li className="nav-item active">
                             <a className="nav-link" href="/System">Employee Functions</a>
-                        </li>
+                        </li> : <a></a> }
+                    </ul>
+                    <ul className="navbar-nav ml-auto">
+                       {isLoggedIn ?  <button type="button" className="btn btn-success" onClick={() => {this.context.logout()}}>Logout </button> : <Link type="button"  className="btn btn-success" to="/Login">Login</Link>}
                     </ul>
                 </div>
             </nav>

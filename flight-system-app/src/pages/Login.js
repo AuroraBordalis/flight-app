@@ -1,11 +1,16 @@
 import React, { Component, useEffect } from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { contextType } from "react-datetime";
 import { useNavigate } from "react-router-dom";
 import '../App.css';
+import { UserContext } from "../contexts/UserContext";
 
 function Login(props) {
     const [userDetails, setDetails] = useState([]);
     let navigate = useNavigate();
+
+    contextType = useContext(UserContext);
+   
     const handleChange = (event) => {
 
         if (event.target != undefined) {
@@ -27,9 +32,19 @@ function Login(props) {
 
         if(response.status == 200){
             let result = await response.json();
-            console.log(result);
+            
             window.sessionStorage.setItem("token", result.tokenType + " " + result.accessToken);
-            console.log(window.sessionStorage.getItem("token"));
+            window.sessionStorage.setItem("admin", false);
+            console.log(result);
+            
+            if(result.roles[1] == "ROLE_ADMIN"){
+                window.sessionStorage.setItem("admin", true);
+                console.log("Admin User!");
+                contextType.loginAdmin();
+            
+            }
+
+            contextType.login();
             
             navigate("/");
 
@@ -41,6 +56,8 @@ function Login(props) {
 
         
     }
+
+   
     return (
         <div className="mask d-flex align-items-center h-100 gradient-custom-3">
             <div className="container h-100">
