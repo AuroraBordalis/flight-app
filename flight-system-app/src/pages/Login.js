@@ -37,7 +37,7 @@ function Login(props) {
             window.sessionStorage.setItem("admin", false);
             console.log(result);
             
-            if(result.roles[1] == "ROLE_ADMIN"){
+            if(result.roles[1] == "ROLE_ADMIN" || result.roles[0] == "ROLE_ADMIN"){
                 window.sessionStorage.setItem("admin", true);
                 console.log("Admin User!");
                 contextType.loginAdmin();
